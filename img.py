@@ -13,21 +13,21 @@ def gb_to_red(img):
             elif r < b:
             r, b = b, r
             """
-            pixels[i, j] = (r, g, b)
+            pixels[i, j] = (int(r), int(g), int(b))
 
-def death_to_green(img):
+def reduce_green(img):
     pixels = img.load()
     for i in range(img.size[0]):    # for every pixel:
         for j in range(img.size[1]):
             r, g, b = img.getpixel((i, j))
             if g > max(r, b):
                 g = max(r, b)
-            pixels[i, j] = (r, g, b)
+            pixels[i, j] = (int(r), int(g), int(b))
 
 def distort(img):
     pixels = img.load()
     offset = .001
-    print offset
+    print(offset)
     org = 50
     for i in range(img.size[0]):    # for every pixel:
         for j in range(img.size[1]):
@@ -45,11 +45,11 @@ def distort(img):
                 r /= 2
                 g /= 2
                 b /= 2
-                
-                pixels[i, j] = (r, g, b)
+                pixels[i, j] = (int(r), int(g), int(b))
+
         if (i < 100) and (i > 50):
                 offset += .002
-    print offset
+    print(offset)
 
 def sepia(img):
     pixels = img.load()
@@ -60,7 +60,7 @@ def sepia(img):
             r = c + 112
             g = c + 66
             b = c + 20
-            pixels[i, j] = (r, g, b)
+            pixels[i, j] = (int(r), int(g), int(b))
 
 
 def blur(img):
@@ -80,7 +80,7 @@ def blur(img):
                     r/=5
                     g/=5
                     b/=5
-                    pixels[i,j] = (r, g, b) # set the colour accordingly
+                    pixels[i, j] = (int(r), int(g), int(b))
 
 def fill(img, c):
     pixels = img.load()
@@ -99,7 +99,7 @@ def select(img, x, y):
                 if g in range(ig - threshold, ig + threshold):
                     if b in range(ib - threshold, ib + threshold):
                         r = g = b = 0
-            pixels[i, j] = (r, g, b)
+            pixels[i, j] = (int(r), int(g), int(b))
 
 def median_filter(img):
     pixels = img.load()
@@ -129,11 +129,9 @@ def add_colour(pixels, x, y, sum):
     sum += img.getpixel((x, y+1))
     sum += img.getpixel((x+1, y+1))
 
-img = Image.open(sys.argv[1]) # create a new black image
-
+img = Image.open(sys.argv[1])
 #select(img, 50, 100)
-median_filter(img)
-
+sepia(img)
 img.show()
 
 
